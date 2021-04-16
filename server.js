@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require("fs")
 const { Recoverable } = require('repl');
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 3001;
 let db = require("./db/db.json");
 
 
