@@ -2,10 +2,11 @@ const express = require('express');
 const path = require('path');
 // const db = require("./db/db.json")
 const fs = require("fs")
-let db = require("./db/db.json");
 const { Recoverable } = require('repl');
 const app = express();
 const PORT = 8080;
+let db = require("./db/db.json");
+
 
 
 // app.use(express.urlencoded({ extended: true }));
@@ -21,26 +22,31 @@ app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'notes.html'))
 app.post('/api/notes', (req, res) => {
     fs.readFile("./db/db.json", "utf-8", (err, data) => {
         console.log("hit the post request")
+        
         if(err) {
-            return res.send("err occured reading your data")
+            return res.send("err occurred reading your data")
         } 
         db = JSON.parse(data);
+        // console.log(req)
+        
+        
         const newNote = {
-            ...req.body, id: db.length 
+            body: res.body,
+             id: db.length 
         }
         db.push(newNote);
         fs.writeFile("./db/db.json", JSON.stringify(db), "utf-8", (err) => {
             if(err) {
-                return res.send("err occured  writing data")
+                return res.send("err occurred  writing data")
             } 
             res.json(newNote);
         })
     })
-    console.log("world")
+    
 });
 
 app.get('/api/notes', (req, res) => {
-    console.log("hello")
+    console.log("orange")
     
 });
 
